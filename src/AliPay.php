@@ -9,7 +9,7 @@
 namespace Linyuee;
 
 use Linyuee\aop\request\AlipayTradeAppPayRequest;
-use App\aop\AopClient;
+use Linyuee\aop\AopClient;
 use Linyuee\Exception\ApiException;
 
 class AliPay
@@ -37,7 +37,7 @@ class AliPay
 //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
         $request = new AlipayTradeAppPayRequest();
 //SDK已经封装掉了公共参数，这里只需要传入业务参数
-        $bizcontent = $this->format;
+        $bizcontent = json_encode($this->format);
         $request->setNotifyUrl($this->notifyUrl);
         $request->setBizContent($bizcontent);
 //这里和普通的接口调用不同，使用的是sdkExecute
@@ -68,7 +68,13 @@ class AliPay
         return $this->appPrivatekey;
     }
 
-    public function setFormat($format){
+    public function setFormat(array $format){
+        $need = ['subject','out_trade_no','total_amount'];
+        foreach ($need as $key=>$item) {
+            if (!array_key_exists($item,$format)){
+                throw new ApiException('缺少业务参数'.$item);
+            }
+        }
         $this->format = $format;
     }
 
