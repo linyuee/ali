@@ -5,7 +5,6 @@
  * Date: 2017/12/20
  * Time: 上午11:08
  */
-
 namespace Linyuee;
 
 use Linyuee\aop\request\AlipayTradeAppPayRequest;
@@ -43,7 +42,8 @@ class AliPay
 //这里和普通的接口调用不同，使用的是sdkExecute
         $response = $aop->sdkExecute($request);
 //htmlspecialchars是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
-        return htmlspecialchars($response);//就是orderString 可以直接给客户端请求，无需再做处理。
+        return $response;
+        //return htmlspecialchars($response);//就是orderString 可以直接给客户端请求，无需再做处理。
     }
 
     public function setAppPrivateKey($app_private_key){
@@ -65,7 +65,7 @@ class AliPay
         if(empty($this->aliPayPublicKey)){
             throw new ApiException('ALIPAY_PUBLIC_KEY不能为空');
         };
-        return $this->appPrivatekey;
+        return $this->aliPayPublicKey;
     }
 
     public function setFormat(array $format){
