@@ -1,4 +1,5 @@
 <?php
+namespace Linyuee\aop\request;
 /**
  * ALIPAY API: alipay.trade.refund request
  *
