@@ -13,11 +13,11 @@ $res = $pay->unifiedorder();
 ```
 返回示例：
 
-"alipay_sdk=alipay-sdk-php-20161101&amp;app_id=2002030550&amp;
+"alipay_sdk=alipay-sdk-php-20161101&amp;app_id=20020302550&amp;
 biz_content=%7B%22subject%22%3A%22%5Cu9510%5Cu516c%5Cu8003%5Cu8bfe%5Cu7a0b%5Cu8d2d%5Cu4e70%22%2C%22out_trade_no%22%3A14885469%2C%22total_amount%22%3Anull%7D&amp;
 charset=UTF-8&amp;format=json&amp;method=alipay.trade.app.pay&amp;
-notify_url=api.ruigongkao.ping-qu.com%2Fapi%2Ftest&amp;sign_type=RSA2&amp;
+notify_url=api.test.com%2Fapi%2Ftest&amp;sign_type=RSA2&amp;
 timestamp=2017-12-21+15%3A14%3A51&amp;version=1.0&amp;
-sign=vPmIQUNxzYKDqb24uR2RNERpr6J8Kvd1XNc7i0q3iSv8l9QY1kTiYo1WWp3cVym4w6QA3rhDJesPcZw94I4s%2BA%3D%3D"
+sign=vPmIQUNxzYKDqb24udR2RNERpr6J8Kvd12XNc7i0q3iSv8l9QY12dWp3cVym4w6QA3rhDJesPcZw94I4s%2BA%3D%3D"
 
 无需处理直接作为APP的请求参数直接请求支付宝的sdk
