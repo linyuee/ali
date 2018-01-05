@@ -1,4 +1,6 @@
 <?php
+
+namespace Linyuee\aop\request;
 /**
  * ALIPAY API: alipay.trade.wap.pay request
  *

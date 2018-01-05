@@ -230,11 +230,12 @@ class AopClient {
 
         if (curl_errno($ch)) {
 
-            throw new Exception(curl_error($ch), 0);
+            throw new \Exception(curl_error($ch), 0);
         } else {
             $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if (200 !== $httpStatusCode) {
-                throw new Exception($reponse, $httpStatusCode);
+                file_put_contents('./text.txt',$reponse);
+                //throw new Exception($reponse, $httpStatusCode);
             }
         }
 
@@ -248,24 +249,24 @@ class AopClient {
     }
 
 
-    protected function logCommunicationError($apiName, $requestUrl, $errorCode, $responseTxt) {
-        $localIp = isset ($_SERVER["SERVER_ADDR"]) ? $_SERVER["SERVER_ADDR"] : "CLI";
-        $logger = new LtLogger;
-        $logger->conf["log_file"] = rtrim(AOP_SDK_WORK_DIR, '\\/') . '/' . "logs/aop_comm_err_" . $this->appId . "_" . date("Y-m-d") . ".log";
-        $logger->conf["separator"] = "^_^";
-        $logData = array(
-            date("Y-m-d H:i:s"),
-            $apiName,
-            $this->appId,
-            $localIp,
-            PHP_OS,
-            $this->alipaySdkVersion,
-            $requestUrl,
-            $errorCode,
-            str_replace("\n", "", $responseTxt)
-        );
-        $logger->log($logData);
-    }
+//    protected function logCommunicationError($apiName, $requestUrl, $errorCode, $responseTxt) {
+//        $localIp = isset ($_SERVER["SERVER_ADDR"]) ? $_SERVER["SERVER_ADDR"] : "CLI";
+//        $logger = new LtLogger;
+//        $logger->conf["log_file"] = rtrim(AOP_SDK_WORK_DIR, '\\/') . '/' . "logs/aop_comm_err_" . $this->appId . "_" . date("Y-m-d") . ".log";
+//        $logger->conf["separator"] = "^_^";
+//        $logData = array(
+//            date("Y-m-d H:i:s"),
+//            $apiName,
+//            $this->appId,
+//            $localIp,
+//            PHP_OS,
+//            $this->alipaySdkVersion,
+//            $requestUrl,
+//            $errorCode,
+//            str_replace("\n", "", $responseTxt)
+//        );
+//        $logger->log($logData);
+//    }
 
     /**
      * 生成用于调用收银台SDK的字符串
@@ -432,7 +433,7 @@ class AopClient {
         if (strcasecmp($this->fileCharset, $this->postCharset)) {
 
             // writeLog("本地文件字符集编码与表单提交编码不一致，请务必设置成一样，属性名分别为postCharset!");
-            throw new Exception("文件编码：[" . $this->fileCharset . "] 与表单提交编码：[" . $this->postCharset . "]两者不一致!");
+            throw new \Exception("文件编码：[" . $this->fileCharset . "] 与表单提交编码：[" . $this->postCharset . "]两者不一致!");
         }
 
         $iv = null;
@@ -470,17 +471,17 @@ class AopClient {
 
             if ($this->checkEmpty($apiParams['biz_content'])) {
 
-                throw new Exception(" api request Fail! The reason : encrypt request is not supperted!");
+                throw new  \Exception(" api request Fail! The reason : encrypt request is not supperted!");
             }
 
             if ($this->checkEmpty($this->encryptKey) || $this->checkEmpty($this->encryptType)) {
 
-                throw new Exception(" encryptType and encryptKey must not null! ");
+                throw new \Exception(" encryptType and encryptKey must not null! ");
             }
 
             if ("AES" != $this->encryptType) {
 
-                throw new Exception("加密类型只支持AES");
+                throw new \Exception("加密类型只支持AES");
             }
 
             // 执行加密
@@ -505,9 +506,9 @@ class AopClient {
         //发起HTTP请求
         try {
             $resp = $this->curl($requestUrl, $apiParams);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
-            $this->logCommunicationError($sysParams["method"], $requestUrl, "HTTP_ERROR_" . $e->getCode(), $e->getMessage());
+            //$this->logCommunicationError($sysParams["method"], $requestUrl, "HTTP_ERROR_" . $e->getCode(), $e->getMessage());
             return false;
         }
 
@@ -542,7 +543,7 @@ class AopClient {
 
         //返回的HTTP文本不是标准JSON或者XML，记下错误日志
         if (false === $respWellFormed) {
-            $this->logCommunicationError($sysParams["method"], $requestUrl, "HTTP_RESPONSE_NOT_WELL_FORMED", $resp);
+            //$this->logCommunicationError($sysParams["method"], $requestUrl, "HTTP_RESPONSE_NOT_WELL_FORMED", $resp);
             return false;
         }
 
