@@ -1,7 +1,8 @@
 {
     "name": "linyuee/ali",
     "description": "支付宝支付",
-    "version": "1.0.2",
+    "keyword": ["ali","pay","aop"],
+    "version": "1.0.3",
     "require": {
         "php": ">=5.5",
         "linyuee/core": "1.0.*"
@@ -11,7 +12,6 @@
     "autoload": {
         "psr-4": {
             "Linyuee\\": "src/"
-
         }
     },
     "license": "MIT",
